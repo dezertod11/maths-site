@@ -1,0 +1,54 @@
+{% extends "base_page.html" %}
+
+{% block page-title %}
+Add a Physics Problem
+{% endblock %}
+
+{% block page-lead %}
+Contribute to our physics problem collection by adding a new problem with its solution.
+{% endblock %}
+
+{% block content %}
+<div class="container px-4 py-5">
+    <form method="post" action="/send-problem">
+        {% csrf_token %}
+        <div class="mb-3 row">
+            <label for="name" class="col-sm-2 col-form-label">Your Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="name" name="name" placeholder="John Doe" required>
+            </div>
+        </div>
+        
+        <div class="mb-3 row">
+            <label for="new_problem" class="col-sm-2 col-form-label">Physics Problem</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" id="new_problem" name="new_problem" rows="3" required placeholder="Enter the physics problem statement"></textarea>
+            </div>
+        </div>
+        
+        <div class="mb-3 row">
+            <label for="new_solution" class="col-sm-2 col-form-label">Solution</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" id="new_solution" name="new_solution" rows="3" required placeholder="Enter the correct solution"></textarea>
+            </div>
+        </div>
+        
+        <div class="mb-3 row">
+            <label for="difficulty" class="col-sm-2 col-form-label">Difficulty</label>
+            <div class="col-sm-10">
+                <select class="form-select" id="difficulty" name="difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="mb-3 row">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-primary">Submit Problem</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

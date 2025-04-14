@@ -2,32 +2,85 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>{% block pagetitle %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block pagetitle %}Physics Problem Collection{% endblock %}</title>
     <!-- load static -->
     {% load static %}
     <!-- CSS -->
     <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
+    
+    <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+    <!-- Optional: Physics-themed favicon -->
+    <link rel="icon" href="{% static 'physics-icon.svg' %}" type="image/svg+xml">
+    <style>
+        .physics-bg {
+            background-color: #f8f9fa;
+            background-image: radial-gradient(circle at 10% 20%, rgba(0,100,255,0.05) 0%, rgba(0,100,255,0.05) 90%);
+        }
+        .nav-link.active {
+            font-weight: 600;
+            border-bottom: 2px solid #0d6efd;
+        }
+    </style>
 </head>
-<body>
+<body class="physics-bg">
 <main>
     <div class="container">
         <header class="border-bottom">
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                <div class="fs-2 mb-3">
-                    <img src="{% static 'calculator.svg' %}" alt="Проект про математику" width="32" height="32"/>
-                    <span>Проект про математику</span>
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container-fluid">
+                    <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+                        <img src="{% static 'physics-icon.svg' %}" alt="Physics Problems" width="40" height="40" class="me-2">
+                        <span class="fs-3 fw-bold">Physics Problem Collection</span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/problems-list">Problems</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/solve-problem">Practice</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/add-problem">Contribute</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/stats">Statistics</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </a>
+            </nav>
         </header>
-        <div class="p-5 mb-4 bg-light rounded-3" id="title-box">
-            <div class="container-fluid py-5">
-                <h1 class="display-1 fw-bold">{% block page-title %}{% endblock %}</h1>
-                <p class="col-md-8 fs-4">{% block page-lead %}{% endblock %}</p>
+
+        <div class="p-5 mb-4 rounded-3" id="title-box" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);">
+            <div class="container-fluid py-3">
+                <h1 class="display-4 fw-bold">{% block page-title %}{% endblock %}</h1>
+                <p class="col-md-8 fs-5">{% block page-lead %}{% endblock %}</p>
             </div>
         </div>
+
         {% block content %}{% endblock %}
-        <footer class="footer pt-3 mt-4 text-muted border-top">© 2023</footer>
+
+        <footer class="footer pt-4 mt-5 text-muted border-top">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Physics Problem Collection</h5>
+                    <p>Interactive platform for learning and practicing physics problems</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p class="mb-1">© {% now "Y" %} Physics Education Project</p>
+                    <p class="text-muted small">Built with Django and Bootstrap</p>
+                </div>
+            </div>
+        </footer>
     </div>
 </main>
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="{% static 'bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

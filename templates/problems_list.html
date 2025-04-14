@@ -1,0 +1,48 @@
+{% extends "base_page.html" %}
+
+{% block page-title %}
+Physics Problem Collection
+{% endblock %}
+
+{% block page-lead %}
+Browse our collection of physics problems. Click "Solve" to attempt a problem.
+{% endblock %}
+
+{% block content %}
+<div class="container px-4 py-5" id="problems-table">
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col" class="py-3">#</th>
+              <th scope="col" class="py-3">Problem</th>
+              <th scope="col" class="py-3">Difficulty</th>
+              <th scope="col" class="py-3">Units</th>
+              <th scope="col" class="py-3">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for cnt, problem, solution, difficulty, dimension in problems %}
+            <tr>
+                <td class="py-3">{{ cnt }}</td>
+                <td class="py-3">{{ problem }}</td>
+                <td class="py-3">
+                    <span class="badge 
+                    {% if difficulty == 'easy' %}bg-success
+                    {% elif difficulty == 'medium' %}bg-warning
+                    {% else %}bg-danger
+                    {% endif %}">
+                        {{ difficulty|title }}
+                    </span>
+                </td>
+                <td class="py-3">{{ dimension }}</td>
+                <td class="py-3">
+                    <a href="/solve-problem?problem_id={{ cnt }}" class="btn btn-sm btn-primary">Solve</a>
+                </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+</div>
+{% endblock %}

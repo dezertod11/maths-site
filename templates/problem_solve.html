@@ -1,0 +1,87 @@
+{% extends "base_page.html" %}
+
+{% block page-title %}
+Solve Physics Problem
+{% endblock %}
+
+{% block page-lead %}
+Select a problem to solve from our collection. Enter your numerical answer with correct units.
+{% endblock %}
+
+{% block content %}
+<div class="container px-4 py-5">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4>Problem List</h4>
+                </div>
+                <div class="card-body" style="max-height: 500px; overflow-y: auto;">
+                    <div class="list-group">
+                        {% for cnt, problem, solution, difficulty, dimension in problems %}
+                        <a href="/solve-problem?problem_id={{ cnt }}" 
+                           class="list-group-item list-group-item-action 
+                                  {% if selected_problem and selected_problem.id == cnt %}active{% endif %}">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Problem #{{ cnt }}</h6>
+                                <small class="badge 
+                                    {% if difficulty == 'easy' %}bg-success
+                                    {% elif difficulty == 'medium' %}bg-warning
+                                    {% else %}bg-danger
+                                    {% endif %}">
+                                    {{ difficulty|title }}
+                                </small>
+                            </div>
+                            <p class="mb-1">{{ problem|truncatewords:10 }}</p>
+                            <small class="text-muted">Units: {{ dimension }}</small>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4>Solve Problem</h4>
+                </div>
+                <div class="card-body">
+                    {% if selected_problem %}
+                    <form method="post" action="/check-solution">
+                        {% csrf_token %}
+                        <input type="hidden" name="problem_id" value="{{ selected_problem.id }}">
+                        
+                        <div class="mb-3">
+                            <h5>Problem #{{ selected_problem.id }}</h5>
+                            <div class="alert alert-secondary">
+                                {{ selected_problem.text }}
+                            </div>
+                            <p class="text-muted">Expected unit: <strong>{{ selected_problem.dimension }}</strong></p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="user_answer" class="form-label">Your Answer:</label>
+                            <div class="input-group">
+                                <input type="number" step="any" class="form-control" 
+                                       id="user_answer" name="user_answer" required
+                                       placeholder="Enter numerical value">
+                                <span class="input-group-text">{{ selected_problem.dimension }}</span>
+                            </div>
+                            <div class="form-text">Enter only the numerical value, units are already specified</div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Check Answer</button>
+                    </form>
+                    {% else %}
+                    <div class="alert alert-info">
+                        <h5>Select a problem from the list</h5>
+                        <p>Choose a problem from the left panel to start solving</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
