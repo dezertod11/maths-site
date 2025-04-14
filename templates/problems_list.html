@@ -4,10 +4,6 @@
 Physics Problem Collection
 {% endblock %}
 
-{% block page-lead %}
-Browse our collection of physics problems. Click "Solve" to attempt a problem.
-{% endblock %}
-
 {% block content %}
 <div class="container px-4 py-5" id="problems-table">
     <div class="table-responsive">
@@ -17,7 +13,6 @@ Browse our collection of physics problems. Click "Solve" to attempt a problem.
               <th scope="col" class="py-3">#</th>
               <th scope="col" class="py-3">Problem</th>
               <th scope="col" class="py-3">Difficulty</th>
-              <th scope="col" class="py-3">Units</th>
               <th scope="col" class="py-3">Action</th>
             </tr>
           </thead>
@@ -35,9 +30,8 @@ Browse our collection of physics problems. Click "Solve" to attempt a problem.
                         {{ difficulty|title }}
                     </span>
                 </td>
-                <td class="py-3">{{ dimension }}</td>
                 <td class="py-3">
-                    <a href="/solve-problem?problem_id={{ cnt }}" class="btn btn-sm btn-primary">Solve</a>
+                    <a href="{% url 'solve-problem' %}?problem_id={{ cnt }}" class="btn btn-sm btn-primary">Solve</a>
                 </td>
             </tr>
             {% endfor %}

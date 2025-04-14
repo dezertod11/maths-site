@@ -48,7 +48,7 @@ Select a problem to solve from our collection. Enter your numerical answer with 
                 </div>
                 <div class="card-body">
                     {% if selected_problem %}
-                    <form method="post" action="/check-solution">
+                    <form method="post" action="{% url 'check-solution' %}">
                         {% csrf_token %}
                         <input type="hidden" name="problem_id" value="{{ selected_problem.id }}">
                         

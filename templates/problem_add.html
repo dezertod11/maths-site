@@ -10,7 +10,7 @@ Contribute to our physics problem collection by adding a new problem with its so
 
 {% block content %}
 <div class="container px-4 py-5">
-    <form method="post" action="/send-problem">
+    <form method="post" action="{% url 'send-problem' %}">
         {% csrf_token %}
         <div class="mb-3 row">
             <label for="name" class="col-sm-2 col-form-label">Your Name</label>

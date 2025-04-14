@@ -100,3 +100,16 @@ def update_user_progress(problem_id, is_correct):
     # Save updated progress
     with open("./data/user_progress.json", "w", encoding="utf-8") as f:
         json.dump(progress, f)
+
+def get_problem_by_id(problem_id):
+    with open("./data/problems.csv", "r", encoding="utf-8") as f:
+        lines = f.readlines()[1:]  # Skip header
+        if 1 <= problem_id <= len(lines):
+            problem, solution, difficulty = lines[problem_id-1].strip().split(";")
+            return {
+                "id": problem_id,
+                "problem": problem,
+                "solution": solution,
+                "difficulty": difficulty
+            }
+    return None
