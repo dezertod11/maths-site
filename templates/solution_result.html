@@ -1,0 +1,47 @@
+{% extends "base_page.html" %}
+
+{% block page-title %}
+Solution Result
+{% endblock %}
+
+{% block page-lead %}
+{% if correct %}✅ Correct Answer!{% else %}❌ Incorrect Answer{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container px-4 py-5">
+    <div class="card">
+        <div class="card-header {% if correct %}bg-success{% else %}bg-danger{% endif %} text-white">
+            <h4>Problem #{{ problem_id }}</h4>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Problem:</h5>
+            <p class="card-text">{{ problem_text }}</p>
+            
+            <hr>
+            
+            <h5 class="card-title">Your Answer:</h5>
+            <div class="alert {% if correct %}alert-success{% else %}alert-danger{% endif %}">
+                {{ user_answer }} {% if dimension %}{{ dimension }}{% endif %}
+            </div>
+            
+            {% if not correct %}
+            <h5 class="card-title">Correct Answer:</h5>
+            <div class="alert alert-secondary">
+                {{ correct_answer }} {% if dimension %}{{ dimension }}{% endif %}
+            </div>
+            
+            <div class="alert alert-info">
+                <h6>Explanation:</h6>
+                <p>{{ explanation|default:"Check your calculations carefully." }}</p>
+            </div>
+            {% endif %}
+            
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a href="/solve-problem" class="btn btn-outline-secondary me-md-2">Back to Problems</a>
+                <a href="/solve-problem?problem_id={{ problem_id }}" class="btn btn-primary">Try Again</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

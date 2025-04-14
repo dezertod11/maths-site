@@ -1,50 +1,93 @@
 {% extends "base_page.html" %}
 
 {% block page-title %}
-Статистика по терминам
+Problem Solving Statistics
 {% endblock %}
 
 {% block page-lead %}
-Перед тем, как отрендерить эту страницу, веб-приложение ходит в файл/БД, обновляет статистики, а затем подставляет их в шаблон страницы.
-Всё это можно посмотреть в файле <code>views.py</code>.
+Your progress in solving physics problems
 {% endblock %}
 
 {% block content %}
-<div class="container px-4 py-5" id="stats">
-    <div>
-        <h3 class="py-2">Количество терминов</h3>
+<div class="container px-4 py-5">
+    <h2 class="pb-2 border-bottom">Your Progress</h2>
+    
+    <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
+        <!-- Progress Summary Card -->
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Overall Completion</h5>
+                    <div class="progress mb-3" style="height: 30px;">
+                        <div class="progress-bar bg-success" role="progressbar" 
+                             style="width: {{ stats.progress_percentage }}%" 
+                             aria-valuenow="{{ stats.progress_percentage }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                            {{ stats.progress_percentage }}%
+                        </div>
+                    </div>
+                    <p class="card-text">
+                        {{ stats.solved }} of {{ stats.total_problems }} problems solved
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Solved Problems Card -->
+        <div class="col">
+            <div class="card h-100 border-success">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Correct Solutions</h5>
+                    <p class="display-4 text-success">{{ stats.solved }}</p>
+                    <p class="card-text">Problems solved correctly</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Unsolved Problems Card -->
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Attempted</h5>
+                    <p class="display-4 text-warning">{{ stats.unsolved }}</p>
+                    <p class="card-text">Problems attempted but not yet solved</p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="row text-center">
-        <div class="col-md-4">
-            <h4>{{ terms_all }}</h4>
-            <p class="text-muted">всего</p>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Not Yet Attempted</h5>
+                    <p class="display-4 text-info">{{ stats.not_attempted }}</p>
+                    <p class="card-text">Problems waiting to be solved</p>
+                </div>
+            </div>
         </div>
-        <div class="col-md-4">
-            <h4>{{ terms_own }}</h4>
-            <p class="text-muted">изначально бывших в базе</p>
-        </div>
-        <div class="col-md-4">
-            <h4>{{ terms_added }}</h4>
-            <p class="text-muted">добавленных через <a href="/add-term">форму добавления термина</a></p>
-        </div>
-    </div>
-    <div>
-        <h3 class="py-2">Описания</h3>
-    </div>
-    <div class="row text-center">
-        <div class="col-md-4">
-            <h4>{{ words_avg }}</h4>
-            <p class="text-muted">слов в среднем</p>
-        </div>
-        <div class="col-sm-4">
-            <h4>{{ words_max }}</h4>
-            <p class="text-muted">максимум</p>
-        </div>
-        <div class="col-sm-4">
-            <h4>{{ words_min }}</h4>
-            <p class="text-muted">минимум</p>
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Progress Breakdown</h5>
+                    <div class="progress-stacked">
+                        <div class="progress" role="progressbar" 
+                             style="width: {{ stats.solved_percentage }}%; height: 30px">
+                            <div class="progress-bar bg-success">Solved ({{ stats.solved }})</div>
+                        </div>
+                        <div class="progress" role="progressbar" 
+                             style="width: {{ stats.unsolved_percentage }}%; height: 30px">
+                            <div class="progress-bar bg-warning">Attempted ({{ stats.unsolved }})</div>
+                        </div>
+                        <div class="progress" role="progressbar" 
+                             style="width: {{ stats.not_attempted_percentage }}%; height: 30px">
+                            <div class="progress-bar bg-info">Not Attempted ({{ stats.not_attempted }})</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 {% endblock %}
-

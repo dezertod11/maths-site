@@ -1,0 +1,26 @@
+{% extends "base_page.html" %}
+
+{% block page-title %}
+{% if success %}Success!{% else %}Error{% endif %}
+{% endblock %}
+
+{% block page-lead %}
+{% if success %}Thank you for your contribution!{% else %}Please correct the errors below.{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container px-4 py-5">
+    <div class="alert {% if success %}alert-success{% else %}alert-danger{% endif %}">
+        <h4 class="alert-heading">
+            {% if success %}Success!{% else %}Error{% endif %}
+        </h4>
+        <p>{{ comment }}</p>
+    </div>
+    
+    {% if success %}
+    <a href="/problems-list" class="btn btn-primary">View Problems</a>
+    {% else %}
+    <a href="/add-problem" class="btn btn-primary">Try Again</a>
+    {% endif %}
+</div>
+{% endblock %}
